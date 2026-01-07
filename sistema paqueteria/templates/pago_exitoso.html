@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Pago Exitoso</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"> <!-- Íconos -->
+</head>
+<body>
+<div class="container py-5 text-center">
+    <h1 class="text-success mb-4">¡Pago realizado con éxito!</h1>
+    <p>Gracias, <strong>{{ sender_name }}</strong>. El envío para <strong>{{ receiver_name }}</strong> está confirmado.</p>
+
+    <h3 class="mt-4">Tu número de rastreo es: <strong>{{ tracking }}</strong></h3>
+
+    <a href="{{ url_for('download_guia') }}" class="btn btn-success mt-3">
+        <i class="fa fa-download"></i> Descargar Guía de Embarque
+    </a>
+
+    <br><br>
+    <a href="{{ url_for('index') }}" class="btn btn-primary mt-3">Volver al inicio</a>
+</div>
+</body>
+</html>

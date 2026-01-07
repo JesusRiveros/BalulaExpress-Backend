@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Completar Información de Envío</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            background-color: #d1e0ff;
+        }
+        .logo {
+            width: 200px;
+            margin-bottom: 20px;
+        }
+        .card {
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            border-radius: 16px 16px 0 0;
+        }
+        .form-control.is-valid {
+            border-color: #28a745;
+            background-image: url('https://cdn-icons-png.flaticon.com/512/190/190411.png');
+            background-size: 1.2rem;
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            padding-right: 2.5rem;
+        }
+        .btn-primary {
+            border-radius: 50px;
+            padding: 0.6rem 2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container py-5">
+    <!-- Logo -->
+    <div class="text-start">
+        <img src="/static/Balula logo.png" alt="Logo" class="logo">
+    </div>
+
+    <h1 class="text-center mb-5">Completa la Información del Envío</h1>
+
+    {% include 'partials/stepper.html' %}
+
+    <form method="post" action="{{ url_for('completar') }}">
+        <!-- Remitente -->
+        <div class="card">
+            <div class="card-header">Datos del Remitente</div>
+            <div class="card-body row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" name="sender_name" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Teléfono</label>
+                    <input type="tel" name="sender_phone" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Calle y número</label>
+                    <input type="text" name="sender_street" class="form-control" value="{{ session.get('sender_street', '') }}" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Colonia</label>
+                    <input type="text" name="sender_neighborhood" class="form-control" value="{{ session.get('sender_neighborhood', '') }}" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Ciudad</label>
+                    <input type="text" name="sender_city" class="form-control" value="{{ session.get('sender_city', '') }}" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Estado</label>
+                    <input type="text" name="sender_state" class="form-control" value="{{ session.get('sender_state', '') }}" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- Destinatario -->
+        <div class="card">
+            <div class="card-header bg-success">Datos del Destinatario</div>
+            <div class="card-body row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" name="receiver_name" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Teléfono</label>
+                    <input type="tel" name="receiver_phone" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Calle y número</label>
+                    <input type="text" name="receiver_street" class="form-control" value="{{ session.get('receiver_street', '') }}" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Colonia</label>
+                    <input type="text" name="receiver_neighborhood" class="form-control" value="{{ session.get('receiver_neighborhood', '') }}" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Ciudad</label>
+                    <input type="text" name="receiver_city" class="form-control" value="{{ session.get('receiver_city', '') }}" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Estado</label>
+                    <input type="text" name="receiver_state" class="form-control" value="{{ session.get('receiver_state', '') }}" required>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Referencias de entrega</label>
+                    <textarea name="receiver_references" class="form-control" rows="3" placeholder="Ej. Entre la calle X y Y, portón negro, casa con reja..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Campos ocultos -->
+        <input type="hidden" name="costo_estimado" value="{{ session.get('costo_estimado', '') }}">
+        <input type="hidden" name="fecha_entrega_estimada" value="{{ session.get('fecha_entrega_estimada', '') }}">
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-arrow-right"></i> Continuar al Pago</button>
+        </div>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('input').forEach(input => {
+        if (input.value.trim() !== '') input.classList.add('is-valid');
+        input.addEventListener('input', e => {
+            if (e.target.value.trim() !== '') e.target.classList.add('is-valid');
+            else e.target.classList.remove('is-valid');
+        });
+    });
+});
+</script>
+</body>
+</html>

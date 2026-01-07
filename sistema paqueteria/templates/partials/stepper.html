@@ -1,0 +1,98 @@
+<ul class="stepper">
+    <li class="{% if paso_actual > 1 %}completed{% elif paso_actual == 1 %}active{% else %}pending{% endif %}" data-step="1">Datos Iniciales</li>
+    <li class="{% if paso_actual > 2 %}completed{% elif paso_actual == 2 %}active{% else %}pending{% endif %}" data-step="2">Cotización</li>
+    <li class="{% if paso_actual > 3 %}completed{% elif paso_actual == 3 %}active{% else %}pending{% endif %}" data-step="3">Información Completa</li>
+    <li class="{% if paso_actual == 4 %}active{% else %}pending{% endif %}" data-step="4">Confirmar y Pagar</li>
+</ul>
+
+<style>
+    .stepper {
+        display: flex;
+        justify-content: space-between;
+        list-style: none;
+        margin-bottom: 2rem;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+        padding: 1rem 2rem;
+    }
+    .stepper li {
+        flex: 1;
+        text-align: center;
+        position: relative;
+        font-weight: 600;
+        color: #aaa;
+        padding-top: 40px;
+    }
+    .stepper li::before {
+        content: attr(data-step);
+        display: inline-block;
+        background: #ddd;
+        color: #666;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 50%;
+        margin: 0 auto 0.75rem auto;
+        position: relative;
+        z-index: 2;
+        font-size: 1.1rem;
+        transition: background-color 0.4s ease, color 0.4s ease;
+    }
+    .stepper li:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 38px; /* centrar verticalmente con el círculo */
+        right: 0;
+        width: 100%;
+        height: 6px;
+        background-color: #ddd;
+        z-index: 1;
+        transition: background-color 0.4s ease;
+        border-radius: 3px;
+    }
+    .stepper li.completed {
+        color: #ff6b00;
+    }
+    .stepper li.completed::before {
+        background: #ff6b00;
+        color: white;
+    }
+    .stepper li.completed:not(:last-child)::after {
+        background-color: #ff6b00;
+        animation: progressFill 3s forwards;
+    }
+    .stepper li.active {
+        color: #ff6b00;
+    }
+    .stepper li.active::before {
+        background: #ff6b00;
+        color: white;
+        font-weight: 700;
+    }
+    .stepper li.pending {
+        color: #aaa;
+    }
+    .stepper li.pending::before {
+        background: #ddd;
+        color: #666;
+    }
+
+    @keyframes progressFillBounce {
+        0% {
+            width: 0%;
+            background-color: #ddd;
+        }   
+        50% {
+            width: 50%;
+            background-color: #ff6b00;
+        }
+        100% {
+            width: 100%;
+            background-color: #ff6b00;
+        }
+    }
+    .stepper li.completed:not(:last-child)::after {
+        animation: progressFillBounce 1s ease-in-out forwards;
+    }   
+</style>
